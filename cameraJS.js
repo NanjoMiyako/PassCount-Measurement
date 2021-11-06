@@ -514,6 +514,7 @@ var passedTimeSpan = document.getElementById("PassedTime1");
 function StartTimer(){
 	var tm = 1000;
 	stTime = new Date();
+	ThrowCount = 0;
 	myTimer1 = setInterval(TickTime, tm);
 }
 function TickTime(){
