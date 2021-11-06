@@ -51,6 +51,9 @@ var CurrentY = 0
 
 var KensyutuRect1 = new Rectangle(0,0,0,0)
 var KensyutuRect2 = new Rectangle(0,0,0,0)
+var continueFlg = false;
+
+
 //ビデオ停止！ボタンで走るやつ
 function RegistKensyutuRect1(){
 	KensyutuRect1 = new Rectangle(LeftUpX, LeftUpY, RightDownX, RightDownY);
@@ -399,7 +402,21 @@ const CHANGE_THRE1 = 30.0;
 const CHANGE_THRE2 = 30.0;
 
 var ThrowCount = 0;
+
+function StartTest1(){
+	continueFlg = true;
+	firstFlg = true;
+	Test1();
+}
+
+//テスト1終了関数
+function Test1End(){
+	continueFlg = false;
+	firstFlg = true;
+}
+
 function Test1(){
+
     //var videoElement = document.querySelector('video');
     //var canvasElement = document.getElementById("canvas2");
     var context1 = g_canvasElement1.getContext('2d');
@@ -460,17 +477,22 @@ function Test1(){
 		
     	//context1.drawImage(g_videoElement, 0, 0, g_videoElement.width, g_videoElement.height);
     	//0.1秒ごとに呼び出し
-    	sleepAndExecuteFunc2(1, Test1);
+    	if(continueFlg == true){
+    		sleepAndExecuteFunc2(1, Test1);
+    	}
     	
 
     }else{
+    	
     	firstFlg = false;
     	g_Count = 0
     	context1.drawImage(g_videoElement, 0, 0, g_videoElement.width, g_videoElement.height);
     	context2.drawImage(g_videoElement, 0, 0, g_videoElement.width, g_videoElement.height);
     	
     	//0.1秒ごとに呼び出し
-    	sleepAndExecuteFunc2(1, Test1);
+    	if(continueFlg == true){
+    		sleepAndExecuteFunc2(1, Test1);
+    	}
     	
 		var throwCountSpan = document.getElementById("ThrowCount1");
 		throwCountSpan.innerHTML = ThrowCount
@@ -626,7 +648,9 @@ function sleepAndExecuteFunc2(waitSec, callbackFunc) {
       }
  
       clearTimeout(id);
-      id = setTimeout(waitFunc, 100);
+      if(continueFlg == true){
+      	id = setTimeout(waitFunc, 100);
+      }
   
   };
  
